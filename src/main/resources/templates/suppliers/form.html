@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${supplier.suppID != null ? 'Edit Supplier' : 'Add Supplier'} + ' - Inventory Management System'">Supplier Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 th:text="${supplier.suppID != null ? 'Edit Supplier' : 'Add Supplier'}">Supplier Form</h2>
+            <a href="/suppliers" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Suppliers
+            </a>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action="${supplier.suppID != null ? '/suppliers/' + supplier.suppID : '/suppliers'}" 
+                              method="post" th:object="${supplier}">
+                            
+                            <div class="mb-3">
+                                <label for="suppCode" class="form-label">Supplier Code *</label>
+                                <input type="text" class="form-control" id="suppCode" th:field="*{suppCode}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('suppCode')}" th:errors="*{suppCode}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location *</label>
+                                <input type="text" class="form-control" id="location" th:field="*{location}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="mobile" class="form-label">Mobile *</label>
+                                <input type="tel" class="form-control" id="mobile" th:field="*{mobile}" 
+                                       pattern="[0-9]{10}" title="Please enter a 10-digit mobile number" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="/suppliers" class="btn btn-secondary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    <span th:text="${supplier.suppID != null ? 'Update' : 'Save'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

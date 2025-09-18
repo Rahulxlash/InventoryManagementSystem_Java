@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${customer.custID != null ? 'Edit Customer' : 'Add Customer'} + ' - Inventory Management System'">Customer Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 th:text="${customer.custID != null ? 'Edit Customer' : 'Add Customer'}">Customer Form</h2>
+            <a href="/customers" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Customers
+            </a>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action="${customer.custID != null ? '/customers/' + customer.custID : '/customers'}" 
+                              method="post" th:object="${customer}">
+                            
+                            <div class="mb-3">
+                                <label for="custCode" class="form-label">Customer Code *</label>
+                                <input type="text" class="form-control" id="custCode" th:field="*{custCode}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('custCode')}" th:errors="*{custCode}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location *</label>
+                                <input type="text" class="form-control" id="location" th:field="*{location}" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="phone" th:field="*{phone}" 
+                                       pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="/customers" class="btn btn-secondary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    <span th:text="${customer.custID != null ? 'Update' : 'Save'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

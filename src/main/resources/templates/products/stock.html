@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title>Current Stock - Inventory Management System</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Current Stock</h2>
+            <a href="/products" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Products
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Cost Price</th>
+                                <th>Sell Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stock : ${stockList}">
+                                <td th:text="${stock.productCode}"></td>
+                                <td th:text="${stock.product.prodName}"></td>
+                                <td>
+                                    <span th:text="${stock.quantity}" 
+                                          th:class="${stock.quantity <= 10 ? 'badge bg-danger' : (stock.quantity <= 50 ? 'badge bg-warning' : 'badge bg-success')}">
+                                    </span>
+                                </td>
+                                <td th:text="'$' + ${stock.product.costPrice}"></td>
+                                <td th:text="'$' + ${stock.product.sellPrice}"></td>
+                                <td>
+                                    <span th:if="${stock.quantity <= 10}" class="badge bg-danger">Low Stock</span>
+                                    <span th:if="${stock.quantity > 10 && stock.quantity <= 50}" class="badge bg-warning">Medium Stock</span>
+                                    <span th:if="${stock.quantity > 50}" class="badge bg-success">In Stock</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(stockList)}">
+                                <td colspan="6" class="text-center text-muted">No stock information available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

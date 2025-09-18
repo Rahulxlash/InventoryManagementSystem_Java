@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title>New Purchase - Inventory Management System</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>New Purchase</h2>
+            <a href="/purchases" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Purchases
+            </a>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action="@{/purchases}" method="post" th:object="${purchaseInfo}">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="supplierCode" class="form-label">Supplier *</label>
+                                        <select class="form-select" id="supplierCode" th:field="*{supplierCode}" required>
+                                            <option value="">Select Supplier</option>
+                                            <option th:each="supplier : ${suppliers}" 
+                                                    th:value="${supplier.suppCode}" 
+                                                    th:text="${supplier.suppCode + ' - ' + supplier.fullName}"></option>
+                                        </select>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('supplierCode')}" th:errors="*{supplierCode}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="productCode" class="form-label">Product *</label>
+                                        <select class="form-select" id="productCode" th:field="*{productCode}" required>
+                                            <option value="">Select Product</option>
+                                            <option th:each="product : ${products}" 
+                                                    th:value="${product.prodCode}" 
+                                                    th:text="${product.prodCode + ' - ' + product.prodName}"></option>
+                                        </select>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('productCode')}" th:errors="*{productCode}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Quantity *</label>
+                                <input type="number" class="form-control" id="quantity" th:field="*{quantity}" min="1" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="/purchases" class="btn btn-secondary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-shopping-bag me-2"></i>Add Purchase
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

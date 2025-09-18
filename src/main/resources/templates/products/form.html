@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${product.prodID != null ? 'Edit Product' : 'Add Product'} + ' - Inventory Management System'">Product Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 th:text="${product.prodID != null ? 'Edit Product' : 'Add Product'}">Product Form</h2>
+            <a href="/products" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Products
+            </a>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:action="${product.prodID != null ? '/products/' + product.prodID : '/products'}" 
+                              method="post" th:object="${product}">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="prodCode" class="form-label">Product Code *</label>
+                                        <input type="text" class="form-control" id="prodCode" th:field="*{prodCode}" required>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('prodCode')}" th:errors="*{prodCode}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="prodName" class="form-label">Product Name *</label>
+                                        <input type="text" class="form-control" id="prodName" th:field="*{prodName}" required>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('prodName')}" th:errors="*{prodName}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="costPrice" class="form-label">Cost Price *</label>
+                                        <input type="number" step="0.01" class="form-control" id="costPrice" th:field="*{costPrice}" required>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('costPrice')}" th:errors="*{costPrice}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="sellPrice" class="form-label">Sell Price *</label>
+                                        <input type="number" step="0.01" class="form-control" id="sellPrice" th:field="*{sellPrice}" required>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('sellPrice')}" th:errors="*{sellPrice}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="brand" class="form-label">Brand *</label>
+                                        <input type="text" class="form-control" id="brand" th:field="*{brand}" required>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="quantity" class="form-label">Initial Quantity *</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" th:value="${quantity}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="/products" class="btn btn-secondary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    <span th:text="${product.prodID != null ? 'Update' : 'Save'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

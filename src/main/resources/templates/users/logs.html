@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title>User Logs - Inventory Management System</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>User Activity Logs</h2>
+            <a href="/users" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Users
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>User Name</th>
+                                <th>Username</th>
+                                <th>Login Time</th>
+                                <th>Logout Time</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="log : ${userLogs}">
+                                <td th:text="${log.user?.fullName ?: 'N/A'}"></td>
+                                <td th:text="${log.username}"></td>
+                                <td th:text="${log.inTime}"></td>
+                                <td th:text="${log.outTime}"></td>
+                                <td th:text="${log.user?.location ?: 'N/A'}"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(userLogs)}">
+                                <td colspan="5" class="text-center text-muted">No user logs found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
